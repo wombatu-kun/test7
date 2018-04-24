@@ -57,6 +57,7 @@
     </dependencies>
 
     <build>
+        <finalName>manufacture</finalName>
         <plugins>
 
             <plugin>
@@ -91,6 +92,31 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Packaging to JAR with dependencies and ZIP with sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>manufacture</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>wombatukun.tests.test7.Application</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptors>
+                                <descriptor>assembly-zip-with-sources.xml</descriptor>
+                            </descriptors>
                         </configuration>
                     </execution>
                 </executions>
