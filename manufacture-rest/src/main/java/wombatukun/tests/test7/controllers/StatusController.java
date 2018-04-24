@@ -16,6 +16,9 @@ import wombatukun.tests.test7.services.StuffService;
 
 import java.util.List;
 
+/**
+ * Контроллер обработки статусных запросов
+ */
 @RestController
 @RequestMapping("/status")
 public class StatusController {

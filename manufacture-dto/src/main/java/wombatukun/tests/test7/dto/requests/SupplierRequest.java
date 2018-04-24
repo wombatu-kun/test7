@@ -1,7 +1,7 @@
 package wombatukun.tests.test7.dto.requests;
 
 /**
- * Запрос напоставку матариала
+ * Запрос на поставку материала
  */
 public class SupplierRequest {
 

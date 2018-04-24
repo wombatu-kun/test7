@@ -5,6 +5,9 @@ import org.mapstruct.Mapping;
 import wombatukun.tests.test7.dto.responses.StuffDto;
 import wombatukun.tests.test7.entity.Stuff;
 
+/**
+ * Конвертер информации о материале
+ */
 @Mapper(componentModel = "spring")
 public interface StuffConverter {
 

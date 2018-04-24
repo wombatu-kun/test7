@@ -18,6 +18,9 @@ import wombatukun.tests.test7.services.OperationService;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Контроллер обработки операций
+ */
 @RestController
 @RequestMapping("/operations")
 public class OperationController {

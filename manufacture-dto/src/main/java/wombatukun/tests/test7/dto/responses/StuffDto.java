@@ -1,9 +1,17 @@
 package wombatukun.tests.test7.dto.responses;
 
+/**
+ * Информация о материале
+ */
 public class StuffDto {
 
+	/** название материала */
 	private String stuffName;
+
+	/** стоимость единицы материала */
 	private Double cost;
+
+	/** количество материала (всего на складе или в составе продукта - в зав-ти от объемлющего транспорта) */
 	private Long amount;
 
 	public StuffDto() {

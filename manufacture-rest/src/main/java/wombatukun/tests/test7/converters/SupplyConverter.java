@@ -6,6 +6,9 @@ import org.mapstruct.Mappings;
 import wombatukun.tests.test7.dto.responses.SupplyDto;
 import wombatukun.tests.test7.entity.Supply;
 
+/**
+ * Конвретер информации о закупке материала
+ */
 @Mapper(componentModel = "spring")
 public interface SupplyConverter {
 

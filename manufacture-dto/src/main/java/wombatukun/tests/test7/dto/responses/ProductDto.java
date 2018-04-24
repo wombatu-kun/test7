@@ -2,10 +2,18 @@ package wombatukun.tests.test7.dto.responses;
 
 import java.util.List;
 
+/**
+ * Информация о продукте
+ */
 public class ProductDto {
 
+	/** название продукта */
 	private String productName;
+
+	/** состав продукта (какие материалы и в каком количестве нужны для производства единицы продукта)*/
 	private List<StuffDto> composition;
+
+	/** общая стоимость продукта (исходя из количества материалов и их цен)*/
 	private Double totalCost;
 
 	public ProductDto() {

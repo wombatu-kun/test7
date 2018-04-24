@@ -1,8 +1,14 @@
 package wombatukun.tests.test7.dto.responses;
 
+/**
+ * Ответ-ошибка
+ */
 public class ErrorDto {
 
+	/** код ошибки */
 	private int code;
+
+	/** сообщение */
 	private String message;
 
 	public ErrorDto() {

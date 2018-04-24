@@ -2,13 +2,27 @@ package wombatukun.tests.test7.dto.responses;
 
 import java.util.Date;
 
+/**
+ * Информация о продаже продукта
+ */
 public class SaleDto {
 
+	/** дата-время действия */
 	private Date date;
+
+	/** название покупаемого продукта */
 	private String productName;
+
+	/** количество покупаемого продукта */
 	private Integer amount;
+
+	/** стоимость единицы продукта */
 	private Double cost;
+
+	/** общая стоимость сделки */
 	private Double totalCost;
+
+	/** результат SUCCESS/FAILURE */
 	private String result;
 
 	public SaleDto() {

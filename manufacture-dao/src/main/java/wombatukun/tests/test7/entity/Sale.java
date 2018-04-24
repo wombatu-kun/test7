@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Продажа продукции
+ * Продажа продукта
  */
 @Entity
 public class Sale {
