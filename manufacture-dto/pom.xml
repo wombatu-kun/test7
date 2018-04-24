@@ -12,8 +12,4 @@
     <artifactId>manufacture-dto</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-
-    </dependencies>
-
 </project>
