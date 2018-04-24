@@ -14,6 +14,7 @@
 
     <properties>
         <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
+        <apache.commons.lang3>3.5</apache.commons.lang3>
     </properties>
 
     <dependencies>
@@ -39,6 +40,11 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.lang3}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

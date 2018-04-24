@@ -24,6 +24,8 @@ import wombatukun.tests.test7.exceptions.ResourceNotFoundException;
 import wombatukun.tests.test7.messages.MessageService;
 import wombatukun.tests.test7.messages.Messages;
 import wombatukun.tests.test7.services.OperationService;
+import wombatukun.tests.test7.validators.ConsumerRequestValidator;
+import wombatukun.tests.test7.validators.SupplierRequestValidator;
 
 import java.util.Date;
 import java.util.List;
@@ -52,13 +54,14 @@ public class OperationServiceImpl implements OperationService {
 	private StuffRepository stuffRepository;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private SupplierRequestValidator supplierRequestValidator;
+	@Autowired
+	private ConsumerRequestValidator consumerRequestValidator;
 
 	@Override
 	public synchronized SaleDto operationSale(ConsumerRequest request) {
-		Product product = productRepository.findByName(request.getProductName());
-		if (product == null) {
-			throw new ResourceNotFoundException(messageService.getMessage(Messages.PRODUCT_NOT_FOUND, request.getProductName()));
-		}
+		Product product = consumerRequestValidator.validate(request);
 		Sale sale = new Sale(new Date(), product, request.getAmount(), Result.SUCCESS);
 		SaleDto dto = saleConverter.saleToSaleDto(sale);
 		Set<Map.Entry<Stuff, Integer>> entrySet = product.getComposition().entrySet();
@@ -76,10 +79,7 @@ public class OperationServiceImpl implements OperationService {
 
 	@Override
 	public synchronized SupplyDto operationSupply(SupplierRequest request) {
-		Stuff stuff = stuffRepository.findByName(request.getStuffName());
-		if (stuff == null) {
-			throw new ResourceNotFoundException(messageService.getMessage(Messages.STUFF_NOT_FOUND, request.getStuffName()));
-		}
+		Stuff stuff = supplierRequestValidator.validate(request);
 		Supply supply = new Supply(new Date(), stuff, request.getAmount(), request.getCost(), Result.SUCCESS);
 		SupplyDto dto = supplyConverter.supplyToSupplyDto(supply);
 		Double totalCost = request.getCost() * request.getAmount();

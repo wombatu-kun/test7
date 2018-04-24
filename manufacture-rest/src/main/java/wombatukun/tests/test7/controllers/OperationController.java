@@ -12,6 +12,7 @@ import wombatukun.tests.test7.dto.responses.ErrorDto;
 import wombatukun.tests.test7.dto.responses.SaleDto;
 import wombatukun.tests.test7.dto.responses.SupplyDto;
 import wombatukun.tests.test7.exceptions.ResourceNotFoundException;
+import wombatukun.tests.test7.exceptions.ValidationException;
 import wombatukun.tests.test7.services.OperationService;
 
 import java.util.Date;
@@ -71,6 +72,12 @@ public class OperationController {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ErrorDto resourceNotFound(ResourceNotFoundException e) {
 		return new ErrorDto(404, e.getMessage());
+	}
+
+	@ExceptionHandler(ValidationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDto badRequest(ValidationException e) {
+		return new ErrorDto(400, e.getMessage());
 	}
 
 }

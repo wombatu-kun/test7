@@ -190,9 +190,51 @@ public class FullIntegrationTest {
 		assertEquals(messageService.getMessage(Messages.SUPPLIES_NOT_FOUND), error.getMessage());
 	}
 
-	//------------------ Успешная закупка материалов
+	//------------------ Проверка невалидого запроса закупки (не указан материал)
 	@Test
 	@MethodOrder(order = 10)
+	public void supplyInvalidStuffNameTest() {
+		SupplierRequest req = new SupplierRequest(null, 10, 50d);
+		ResponseEntity<ErrorDto> resp = restTemplate.postForEntity("/operations/supplies", req, ErrorDto.class);
+		assertNotNull(resp);
+		assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+		ErrorDto error = resp.getBody();
+		assertNotNull(error);
+		assertEquals(400, error.getCode());
+		assertEquals(messageService.getMessage(Messages.STUFF_NAME_NULL), error.getMessage());
+	}
+
+	//------------------ Проверка невалидого запроса закупки (нулевое количество)
+	@Test
+	@MethodOrder(order = 11)
+	public void supplyInvalidAmountTest() {
+		SupplierRequest req = new SupplierRequest("qqq", 0, 50d);
+		ResponseEntity<ErrorDto> resp = restTemplate.postForEntity("/operations/supplies", req, ErrorDto.class);
+		assertNotNull(resp);
+		assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+		ErrorDto error = resp.getBody();
+		assertNotNull(error);
+		assertEquals(400, error.getCode());
+		assertEquals(messageService.getMessage(Messages.AMOUNT_IS_INVALID, req.getAmount()), error.getMessage());
+	}
+
+	//------------------ Проверка невалидого запроса закупки (отрицательная цена)
+	@Test
+	@MethodOrder(order = 12)
+	public void supplyInvalidCostTest() {
+		SupplierRequest req = new SupplierRequest("qqq", 1, -50d);
+		ResponseEntity<ErrorDto> resp = restTemplate.postForEntity("/operations/supplies", req, ErrorDto.class);
+		assertNotNull(resp);
+		assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+		ErrorDto error = resp.getBody();
+		assertNotNull(error);
+		assertEquals(400, error.getCode());
+		assertEquals(messageService.getMessage(Messages.COST_IS_INVALID, req.getCost()), error.getMessage());
+	}
+
+	//------------------ Успешная закупка материалов
+	@Test
+	@MethodOrder(order = 13)
 	public void operationSupplySuccessTest() {
 		double sum = restTemplate.getForObject("/status/account", AccountResponse.class).getSum();
 		SupplierRequest req = new SupplierRequest("stuff1", 10, 50d);
@@ -222,7 +264,7 @@ public class FullIntegrationTest {
 
 	//------------------ Облом закупки материалов
 	@Test
-	@MethodOrder(order = 11)
+	@MethodOrder(order = 14)
 	public void operationSupplyFailureTest() {
 		double sum = restTemplate.getForObject("/status/account", AccountResponse.class).getSum();
 		SupplierRequest req = new SupplierRequest("stuff2", 1000, 800d);
@@ -242,9 +284,9 @@ public class FullIntegrationTest {
 		assertEquals(3, stuffDto.getAmount().longValue());
 	}
 
-	//------------------ Проверка получения истории поставок
+	//------------------ Проверка получения истории закупок
 	@Test
-	@MethodOrder(order = 12)
+	@MethodOrder(order = 15)
 	public void getSuppliesTest() {
 		SupplyDto[] resp = restTemplate.getForObject("/operations/supplies/2018-04-01", SupplyDto[].class);
 		assertNotNull(resp);
@@ -264,9 +306,37 @@ public class FullIntegrationTest {
 		assertEquals(Result.SUCCESS.toString(), resp[2].getResult());
 	}
 
+	//------------------ Проверка невалидого запроса продажи (не указан продукт)
+	@Test
+	@MethodOrder(order = 16)
+	public void saleInvalidStuffNameTest() {
+		ConsumerRequest req = new ConsumerRequest(null, 10);
+		ResponseEntity<ErrorDto> resp = restTemplate.postForEntity("/operations/sales", req, ErrorDto.class);
+		assertNotNull(resp);
+		assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+		ErrorDto error = resp.getBody();
+		assertNotNull(error);
+		assertEquals(400, error.getCode());
+		assertEquals(messageService.getMessage(Messages.PRODUCT_NAME_NULL), error.getMessage());
+	}
+
+	//------------------ Проверка невалидого запроса продажи (отрицательное количество)
+	@Test
+	@MethodOrder(order = 17)
+	public void saleInvalidAmountTest() {
+		ConsumerRequest req = new ConsumerRequest("qqq", -5);
+		ResponseEntity<ErrorDto> resp = restTemplate.postForEntity("/operations/sales", req, ErrorDto.class);
+		assertNotNull(resp);
+		assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+		ErrorDto error = resp.getBody();
+		assertNotNull(error);
+		assertEquals(400, error.getCode());
+		assertEquals(messageService.getMessage(Messages.AMOUNT_IS_INVALID, req.getAmount()), error.getMessage());
+	}
+
 	//------------------ Успешная продажа продукта
 	@Test
-	@MethodOrder(order = 13)
+	@MethodOrder(order = 18)
 	public void operationSaleSuccessTest() {
 		double sum = restTemplate.getForObject("/status/account", AccountResponse.class).getSum();
 		ConsumerRequest req = new ConsumerRequest("prod1", 2);
@@ -291,7 +361,7 @@ public class FullIntegrationTest {
 
 	//------------------ Облом продажи продукта
 	@Test
-	@MethodOrder(order = 14)
+	@MethodOrder(order = 19)
 	public void operationSaleFailureTest() {
 		double sum = restTemplate.getForObject("/status/account", AccountResponse.class).getSum();
 		ConsumerRequest req = new ConsumerRequest("prod1", 2);
@@ -315,7 +385,7 @@ public class FullIntegrationTest {
 
 	//------------------ Проверка получения истории продаж
 	@Test
-	@MethodOrder(order = 15)
+	@MethodOrder(order = 20)
 	public void getSalesTest() {
 		SaleDto[] resp = restTemplate.getForObject("/operations/sales/2018-04-01", SaleDto[].class);
 		assertNotNull(resp);
