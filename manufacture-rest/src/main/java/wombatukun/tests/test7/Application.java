@@ -13,7 +13,10 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 @EnableJpaRepositories
 @Import(RepositoryRestMvcConfiguration.class)
 @EnableAutoConfiguration
-@PropertySource(value={"classpath:config.properties"})
+@PropertySources({
+		@PropertySource("classpath:config.properties"),
+		@PropertySource(value={"file:${config.file}"}, encoding = "UTF-8", ignoreResourceNotFound=true)
+})
 @SpringBootApplication
 public class Application {
 
