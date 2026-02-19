@@ -14,7 +14,7 @@
 
     <properties>
         <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
-        <apache.commons.lang3>3.5</apache.commons.lang3>
+        <apache.commons.lang3>3.18.0</apache.commons.lang3>
     </properties>
 
     <dependencies>
